@@ -1,0 +1,15 @@
+.main-app {
+  text-align: center;
+  margin: 100px;
+  
+}
+
+.connect-Wallet-Button {
+  background: rgb(44, 132, 255);
+}
+.wallet-is-Connected {
+  background: rgb(170, 255, 137);
+}
+.getgreetButton {
+  background: rgb(202, 202, 202);
+}

@@ -1,0 +1,128 @@
+import { useEffect, useState } from 'react';
+import './App.css';
+import contract from './contracts/Greet.json';
+import { ethers } from 'ethers';
+
+const contractAddress = "0xCA43cbf18169bdF654f0da856FD536B6E50B8631";
+const abi = contract.abi;
+
+function App() {
+
+  const [greeting, setGreetingValue] = useState();
+
+  const checkWalletIsConnected = async () => {
+    const { ethereum } = window;
+
+    if (!ethereum) {
+      console.log("Make sure you have Metamask installed!");
+      return;
+    }
+      else {
+        console.log("Wallet exists! we're ready to go!");
+    }
+
+    const accounts = await ethereum.request({ method: 'eth_accounts' });
+
+    if (accounts.length !== 0) {
+      const account = account[0];
+      console.log("Found an authorize account: ", account);
+      setCurrentAccount(account);
+    }
+    else {
+      console.log("No authorize account found");
+    }
+  }
+
+ 
+
+  const connectWalletHandler = async () => {
+    const { ethereum } = window;
+
+    if (!ethereum){
+      alert("Please install Metamask!");
+    }
+
+    try {
+      const accounts = await ethereum.request({ method: 'eth_requestAccounts'});
+      console.log("Found an account! Address: ", accounts[0]);
+      setCurrentAccount(accounts[0]);
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  const getGreeting = async () => {
+    if (typeof window.ethereum !== 'undefined') {
+      const provider = new ethers.providers.Web3Provider(window.ethereum)
+      const contract = new ethers.Contract(contractAddress, abi, provider)
+      try {
+        const data = await contract.greet()
+        console.log('data: ', data)
+        setGreetingValue(data);
+      } catch (err) {
+        console.log("Error: ", err)
+      }
+    }
+  }
+
+
+
+  const setGreeting = async () => {
+    if (!greeting) return;
+    if (typeof window.ethereum !== 'undefined') {
+      await requestAccount();
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      const contract = new ethers.Contract(contractAddress, abi, signer);
+      const transaction = await contract.setGreeting(greeting);
+      await transaction.wait();
+      getGreeting();
+  }
+
+  const connectWalletButton = () => {
+
+      return (
+
+        <button onClick={connectWalletHandler} className='cta-button connect-wallet-button'>
+          Connect Wallet
+        </button>
+      )
+
+  } 
+
+  const getGreetingButton = () => {
+    return (
+      <button onclick={getGreeting} className='cta-button get-greeting-button'>
+        get_greetin
+      </button>
+    )
+  }
+
+  const setNewGreetingButton = () => {
+  return (
+    <button onlick={setGreeting} className='cta-button set-new-greeting-button'>
+      set new Greeting
+    </button>
+  )
+  }
+
+  useEffect(() => {
+    checkWalletIsConnected();
+  }, [])
+
+  return (
+    <div className='main-app'>
+      <header> Welcome!</header>
+      <h3>Contract Greeter</h3>
+      <br/>
+      <div>
+        {currentAccount ? getGreetingButton() : connectWalletButton()}
+      </div>
+      <br/>
+      <button onclick={setNewGreeting}> Set greeting</button>
+    </div>
+  )
+}
+
+}
+export default App;
