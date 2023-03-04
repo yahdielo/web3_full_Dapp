@@ -3,15 +3,16 @@ import { ethers } from 'ethers';
 import { useState, useEffect } from 'react';
 import Greet from './contracts/Greet.json';
 
-const GreeterAddress = "0xCA43cbf18169bdF654f0da856FD536B6E50B8631";
-const network="goerli";
+const GreeterAddress = "0xa3D7ac309F9dB9CCAAfC8D16cd0bD3f18BB3c2BC";
+
 
 const abi = Greet.abi;
 
 function App() {
 
   //
-  const [currentAccount, setCurrentAccount, greeting, setgreetingvalue] = useState(null);
+  const [currentAccount, setCurrentAccount] = useState(null);
+  const [greeting, setgreetingvalue] = useState(null);
 
 //if ethereum swallet state is not detected, handle err elseconnect account
   const checkWalletIsConnected = async () => {
@@ -49,11 +50,11 @@ const _getgreeting = async () => {
 
   if ( window.ethereum !== 'undefined') {  
     //const provider = new ethers.providers.JsonRpcProvider(window.etherum);
-    const provider = new ethers.providers.AlchemyProvider(network, process.env.API_KEY);
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
   
     const contract = new ethers.Contract(GreeterAddress, abi, provider);
-    const get_code = provider.getCode(process.env.GREETER_ADDRESS);
-    console.log(get_code);
+    //const get_code = provider.getCode(process.env.GREETER_ADDRESS);
+    //console.log(get_code);
     try {
       const data = await contract.greeting();
       console.log('data', data);
@@ -72,7 +73,7 @@ async function  setGreeting() {
   if (!greeting) return;
   
   if( window.ethereum !== 'undefined') {
-    const provider = new ethers.providers.JsonRpcProvider(process.env.API_KEY, 5);
+    const provider = new ethers.providers.Web3Provider(process.env.API_KEY, 5);
   
     const signer = provider.getSingner();
     const contract = new ethers.Contract(GreeterAddress, abi, signer);
@@ -114,7 +115,7 @@ useEffect(() => {
         </div>
       <br/>
         <div>
-        <p>contract greeting is: {  }</p>
+        <p>contract greeting is: {greeting}</p>
           { getgreetButton() }
         </div>
       
