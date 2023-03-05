@@ -115,7 +115,7 @@ useEffect(() => {
         </div>
       <br/>
         <div>
-        <p>contract greeting is: {greeting}</p>
+        <p>contract greeting is: { greeting }</p>
           { getgreetButton() }
         </div>
       
