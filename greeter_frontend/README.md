@@ -2,6 +2,8 @@
 
 to start the project run 
 
+    npx create-react-app my-react-app
+    cd my-react-app
     npm start
 
 react will initialize every thing you need to get to work right away
