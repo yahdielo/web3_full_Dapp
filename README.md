@@ -27,7 +27,7 @@ run
   
 This will launch the Dapp on your localhost, and you can access it through your web browser by visiting http://localhost:3000.
 
-Features:
+# Features
 
 The Web3 Full Dapp provides the following features:
 
