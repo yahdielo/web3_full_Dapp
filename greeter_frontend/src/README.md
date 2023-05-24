@@ -17,3 +17,6 @@ Get Greeting: Click on the "Get greet" button to fetch and display the current g
 
 Set Greeting: Enter a new greeting message in the input field and click the "Set greeting" button to update the greeting message in the Greeter smart contract.
 
+## example of the front end
+
+![Example Image](./imgs/web3_frontend.png)
