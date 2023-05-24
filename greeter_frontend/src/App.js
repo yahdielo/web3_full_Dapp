@@ -73,11 +73,12 @@ async function  setGreeting() {
   if (!greeting) return;
   
   if( window.ethereum !== 'undefined') {
-    const provider = new ethers.providers.Web3Provider(process.env.API_KEY, 5);
+
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
   
-    const signer = provider.getSingner();
+    const signer = provider.getSigner();
     const contract = new ethers.Contract(GreeterAddress, abi, signer);
-    const transaction = await contract.setGreeting(greeting);
+    const transaction = await contract.setGreeting();
     await transaction.wait();
     _getgreeting();
   }
@@ -88,6 +89,7 @@ const getgreetButton = () => {
     <button onClick={_getgreeting} className='cta-button get-current-greeting-button'>Get greet</button>
   )
 }
+
 
 
 const connectWalletButton = () => {
@@ -120,9 +122,9 @@ useEffect(() => {
         </div>
       
       <br/>
-      <input onChange={e => setgreetingvalue(e.target.value)} placeholder="Set new greeting" />
+      <input id="set greet" type="text" placeholder="new greeting" />
       <br/>
-      <button onClick={setGreeting}>Set greeting</button>
+      <button onClick={ setGreeting() }>Set greeting</button>
      </div>
   )
   
