@@ -33,8 +33,6 @@ The Web3 Full Dapp provides the following features:
 
 Connect to a Web3 Provider: You can connect your Dapp to a Web3 provider like MetaMask, allowing you to interact with the Ethereum blockchain.
 
-View Account Balance: Once connected, you can view your Ethereum account balance directly from the Dapp.
-
 Interact with Smart Contracts: The Dapp allows you to interact with smart contracts deployed on the Ethereum network. You can execute functions to read and writte data to the the smart contract
 
 
